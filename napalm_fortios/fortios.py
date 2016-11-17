@@ -343,6 +343,21 @@ class FortiOSDriver(NetworkDriver):
     def get_lldp_neighbors(self):
         return {}
 
+    def get_firewall_policies(self):
+        cmd = self.execute_command_with_vdom('show firewall policy')
+        policy = dict()
+        policy_id = None
+        for line in cmd:
+            policy_data = re.sub("\s+", " ", line).lstrip()
+            if policy_data.find("edit") == 0:
+                policy_id = policy_data.split()[1]
+                policy[policy_id] = dict()
+            if policy_id is not None:
+                if len(policy_data.split()) > 2:
+                    policy_setting = policy_data.split()[1]
+                    policy[policy_id][policy_setting] = policy_data.split()[2].replace("\"", "")
+        return policy
+
     def get_environment(self):
 
         def parse_string(line):
