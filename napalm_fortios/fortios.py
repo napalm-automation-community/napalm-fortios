@@ -347,6 +347,8 @@ class FortiOSDriver(NetworkDriver):
         cmd = self.execute_command_with_vdom('show firewall policy')
         policy = dict()
         policy_id = None
+        default_policy = dict()
+        position = 0
         for line in cmd:
             policy_data = re.sub("\s+", " ", line).lstrip()
             if policy_data.find("edit") == 0:
@@ -356,7 +358,38 @@ class FortiOSDriver(NetworkDriver):
                 if len(policy_data.split()) > 2:
                     policy_setting = policy_data.split()[1]
                     policy[policy_id][policy_setting] = policy_data.split()[2].replace("\"", "")
-        return policy
+        for key in policy:
+            if 'status' in  policy[key]:
+                enabled = False
+            else:
+                enabled = True
+            
+            if 'logtraffic' in  policy[key]:
+                logtraffic = policy[key]['logtraffic']
+            else:
+                logtraffic = False
+            
+            if 'action' in policy[key]:
+                action = 'permit'
+            else:
+                action = 'reject'
+    
+            default_policy[policy[key]['srcintf'] + '-to-'  + policy[key]['dstintf']] = dict()
+            default_policy[policy[key]['srcintf'] + '-to-'  + policy[key]['dstintf']]['position'] = position
+            default_policy[policy[key]['srcintf'] + '-to-'  + policy[key]['dstintf']]['id'] = key
+            default_policy[policy[key]['srcintf'] + '-to-'  + policy[key]['dstintf']]['enabled'] = enabled
+            default_policy[policy[key]['srcintf'] + '-to-'  + policy[key]['dstintf']]['schedule'] = policy[key]['schedule']
+            default_policy[policy[key]['srcintf'] + '-to-'  + policy[key]['dstintf']]['log'] = logtraffic
+            default_policy[policy[key]['srcintf'] + '-to-'  + policy[key]['dstintf']]['l3_src'] = policy[key]['srcaddr']
+            default_policy[policy[key]['srcintf'] + '-to-'  + policy[key]['dstintf']]['l3_dst'] = policy[key]['dstaddr']
+            default_policy[policy[key]['srcintf'] + '-to-'  + policy[key]['dstintf']]['service'] = policy[key]['service']
+            default_policy[policy[key]['srcintf'] + '-to-'  + policy[key]['dstintf']]['src_zone'] = policy[key]['srcintf']
+            default_policy[policy[key]['srcintf'] + '-to-'  + policy[key]['dstintf']]['dst_zone'] = policy[key]['dstintf']
+            default_policy[policy[key]['srcintf'] + '-to-'  + policy[key]['dstintf']]['action'] = action
+            print(key) 
+            
+            position = position + 1
+        return default_policy
 
     def get_environment(self):
 
