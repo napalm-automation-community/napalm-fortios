@@ -365,7 +365,7 @@ class FortiOSDriver(NetworkDriver):
         policy = dict()
         policy_id = None
         default_policy = dict()
-        position = 0
+        position = 1
 
         for line in cmd:
             policy_data = line.strip()
@@ -387,7 +387,7 @@ class FortiOSDriver(NetworkDriver):
 
             policy_item = dict()
             default_policy[key] = list() 
-            policy_item['position'] = position
+            policy_item['position'] = str(position)
             policy_item['id'] = key
             policy_item['enabled'] = enabled
             policy_item['schedule'] = policy[key]['schedule']
