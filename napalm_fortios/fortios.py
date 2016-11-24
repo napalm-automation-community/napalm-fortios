@@ -351,7 +351,7 @@ class FortiOSDriver(NetworkDriver):
         position = 0
 
         for line in cmd:
-            policy_data = re.sub("\s+", " ", line).lstrip()
+            policy_data = line.strip()
             if policy_data.find("edit") == 0:
                 policy_id = policy_data.split()[1]
                 policy[policy_id] = dict()
@@ -361,20 +361,12 @@ class FortiOSDriver(NetworkDriver):
                     policy[policy_id][policy_setting] = policy_data.split()[2].replace("\"", "")
 
         for key in policy:
-            if 'status' in  policy[key]:
-                enabled = False
-            else:
-                enabled = True
 
-            if 'logtraffic' in  policy[key]:
-                logtraffic = policy[key]['logtraffic']
-            else:
-                logtraffic = False
+            enabled = 'status' in policy[key]
 
-            if 'action' in policy[key]:
-                action = 'permit'
-            else:
-                action = 'reject'
+            logtraffic = policy[key]['logtraffic'] if 'logtraffic' in  policy[key] else False
+
+            action = 'permit' if 'action' in policy[key] else 'reject'
 
             policy_item = dict()
             default_policy[key] = list() 
