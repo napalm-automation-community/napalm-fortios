@@ -370,7 +370,7 @@ class FortiOSDriver(NetworkDriver):
 
             policy_item = dict()
             default_policy[key] = list() 
-            policy_item['position'] = str(position)
+            policy_item['position'] = position
             policy_item['id'] = key
             policy_item['enabled'] = enabled
             policy_item['schedule'] = policy[key]['schedule']
