@@ -376,9 +376,8 @@ class FortiOSDriver(NetworkDriver):
             else:
                 action = 'reject'
 
-            policy_name = key
             policy_item = dict()
-            default_policy[policy_name] = list() 
+            default_policy[key] = list() 
             policy_item['position'] = position
             policy_item['id'] = key
             policy_item['enabled'] = enabled
@@ -390,7 +389,7 @@ class FortiOSDriver(NetworkDriver):
             policy_item['src_zone'] = policy[key]['srcintf']
             policy_item['dst_zone'] = policy[key]['dstintf']
             policy_item['action'] = action
-            default_policy[policy_name].append(policy_item)
+            default_policy[key].append(policy_item)
 
             position = position + 1
         return default_policy
