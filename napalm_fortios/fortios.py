@@ -373,16 +373,16 @@ class FortiOSDriver(NetworkDriver):
             policy_item['position'] = position
             policy_item['packet_hits'] = -1
             policy_item['byte_hits'] = -1
-            policy_item['id'] = key
+            policy_item['id'] = unicode(key)
             policy_item['enabled'] = enabled
-            policy_item['schedule'] = policy[key]['schedule']
-            policy_item['log'] = logtraffic
-            policy_item['l3_src'] = policy[key]['srcaddr']
-            policy_item['l3_dst'] = policy[key]['dstaddr']
-            policy_item['service'] = policy[key]['service']
-            policy_item['src_zone'] = policy[key]['srcintf']
-            policy_item['dst_zone'] = policy[key]['dstintf']
-            policy_item['action'] = action
+            policy_item['schedule'] = unicode(policy[key]['schedule'])
+            policy_item['log'] = unicode(logtraffic)
+            policy_item['l3_src'] = unicode(policy[key]['srcaddr'])
+            policy_item['l3_dst'] = unicode(policy[key]['dstaddr'])
+            policy_item['service'] = unicode(policy[key]['service'])
+            policy_item['src_zone'] = unicode(policy[key]['srcintf'])
+            policy_item['dst_zone'] = unicode(policy[key]['dstintf'])
+            policy_item['action'] = unicode(action)
             default_policy[key].append(policy_item)
 
             position = position + 1
