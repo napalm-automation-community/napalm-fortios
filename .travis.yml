@@ -23,7 +23,6 @@ deploy:
   on:
     tags: true
     branch: master
-=======
 script:
 - cd test/unit
 - nosetests --with-coverage --cover-package napalm_fortios -v TestFortiOSDriver:TestGetterFortiOSDriver.test_get_bgp_neighbors
