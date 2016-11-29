@@ -23,3 +23,18 @@ deploy:
   on:
     tags: true
     branch: master
+<<<<<<< 2c29dcca1f4cb71476a690b1852335adf165fa1f
+=======
+script:
+- cd test/unit
+- nosetests --with-coverage --cover-package napalm_fortios -v TestFortiOSDriver:TestGetterFortiOSDriver.test_get_bgp_neighbors
+- nosetests --with-coverage --cover-package napalm_fortios -v TestFortiOSDriver:TestGetterFortiOSDriver.test_get_environment
+- nosetests --with-coverage --cover-package napalm_fortios -v TestFortiOSDriver:TestGetterFortiOSDriver.test_get_facts
+- nosetests --with-coverage --cover-package napalm_fortios -v TestFortiOSDriver:TestGetterFortiOSDriver.test_get_interfaces
+- nosetests --with-coverage --cover-package napalm_fortios -v TestFortiOSDriver:TestGetterFortiOSDriver.test_get_interfaces_counters
+- nosetests --with-coverage --cover-package napalm_fortios -v TestFortiOSDriver:TestGetterFortiOSDriver.test_get_config
+- nosetests --with-coverage --cover-package napalm_fortios -v TestFortiOSDriver:TestGetterFortiOSDriver.test_get_firewall_policies
+- cd ../..
+- coverage combine test/unit/.coverage
+after_success: coveralls
+>>>>>>> Implemented get_firewall_policies
