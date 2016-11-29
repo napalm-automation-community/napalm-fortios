@@ -23,7 +23,6 @@ deploy:
   on:
     tags: true
     branch: master
-<<<<<<< 2c29dcca1f4cb71476a690b1852335adf165fa1f
 =======
 script:
 - cd test/unit
@@ -37,4 +36,3 @@ script:
 - cd ../..
 - coverage combine test/unit/.coverage
 after_success: coveralls
->>>>>>> Implemented get_firewall_policies
