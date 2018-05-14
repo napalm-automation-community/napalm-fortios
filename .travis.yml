@@ -1,20 +1,11 @@
 language: python
-
 python:
-- 2.7
-
+  - 2.7
+  - 3.4
+  - 3.5
 install:
-- pip install -r requirements-dev.txt
-- pip install .
-
-script:
-- py.test
-- pylama .
-
-after_success:
-   - coveralls
-   - if [ $TRAVIS_TAG ]; then curl -X POST https://readthedocs.org/build/napalm; fi
-
+  - pip install tox-travis
+  - pip install coveralls
 deploy:
   provider: pypi
   user: dbarroso
@@ -23,3 +14,8 @@ deploy:
   on:
     tags: true
     branch: master
+script:
+  - tox
+after_success:
+  - coveralls
+  - if [ $TRAVIS_TAG ]; then curl -X POST https://readthedocs.org/build/napalm; fi
