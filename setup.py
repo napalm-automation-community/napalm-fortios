@@ -23,7 +23,7 @@ setup(
         'Operating System :: POSIX :: Linux',
         'Operating System :: MacOS',
     ],
-    url="https://github.com/napalm-automation/napalm-fortios",
+    url="https://github.com/napalm-automation-community/napalm-fortios",
     include_package_data=True,
     install_requires=reqs,
 )
